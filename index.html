@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hesaplama Aracı</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; }
+        h2 { color: #333; }
+        .container { width: 90%; max-width: 400px; margin: 20px auto; padding: 20px; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 5px; }
+        input, select, button { width: 100%; padding: 10px; margin: 10px 0; }
+        button { background-color: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #218838; }
+        .result { font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <h2>Hesaplama Aracı</h2>
+    <div class="container">
+        <h3>Matematik İşlemleri</h3>
+        <input type="number" id="num1" placeholder="Sayı 1">
+        <input type="number" id="num2" placeholder="Sayı 2">
+        <select id="operator">
+            <option value="add">Toplama (+)</option>
+            <option value="subtract">Çıkarma (-)</option>
+            <option value="multiply">Çarpma (×)</option>
+            <option value="divide">Bölme (÷)</option>
+        </select>
+        <button onclick="calculateMath()">Hesapla</button>
+        <p class="result" id="mathResult"></p>
+    </div>
+
+    <div class="container">
+        <h3>Faiz ve Kredi Hesaplama</h3>
+        <input type="number" id="loanAmount" placeholder="Kredi Miktarı">
+        <input type="number" id="interestRate" placeholder="Faiz Oranı (%)">
+        <input type="number" id="months" placeholder="Ay Sayısı">
+        <button onclick="calculateLoan()">Hesapla</button>
+        <p class="result" id="loanResult"></p>
+    </div>
+
+    <div class="container">
+        <h3>Beden Kitle İndeksi (BMI) Hesaplama</h3>
+        <input type="number" id="weight" placeholder="Kilo (kg)">
+        <input type="number" id="height" placeholder="Boy (cm)">
+        <button onclick="calculateBMI()">Hesapla</button>
+        <p class="result" id="bmiResult"></p>
+    </div>
+
+    <div class="container">
+        <h3>Yaş Hesaplama</h3>
+        <input type="date" id="birthdate">
+        <button onclick="calculateAge()">Hesapla</button>
+        <p class="result" id="ageResult"></p>
+    </div>
+
+    <div class="container">
+        <h3>Yüzde Hesaplama</h3>
+        <input type="number" id="percentage" placeholder="Yüzde (%)">
+        <input type="number" id="totalValue" placeholder="Toplam Değer">
+        <button onclick="calculatePercentage()">Hesapla</button>
+        <p class="result" id="percentageResult"></p>
+    </div>
+
+    <script>
+        function calculateMath() {
+            let num1 = parseFloat(document.getElementById('num1').value);
+            let num2 = parseFloat(document.getElementById('num2').value);
+            let operator = document.getElementById('operator').value;
+            let result;
+
+            if (operator === 'add') result = num1 + num2;
+            else if (operator === 'subtract') result = num1 - num2;
+            else if (operator === 'multiply') result = num1 * num2;
+            else if (operator === 'divide') result = num1 / num2;
+
+            document.getElementById('mathResult').innerText = "Sonuç: " + result;
+        }
+
+        function calculateLoan() {
+            let amount = parseFloat(document.getElementById('loanAmount').value);
+            let interest = parseFloat(document.getElementById('interestRate').value) / 100 / 12;
+            let months = parseInt(document.getElementById('months').value);
+            let payment = (amount * interest) / (1 - Math.pow(1 + interest, -months));
+
+            document.getElementById('loanResult').innerText = "Aylık Ödeme: " + payment.toFixed(2) + "₺";
+        }
+
+        function calculateBMI() {
+            let weight = parseFloat(document.getElementById('weight').value);
+            let height = parseFloat(document.getElementById('height').value) / 100;
+            let bmi = weight / (height * height);
+
+            document.getElementById('bmiResult').innerText = "BMI: " + bmi.toFixed(2);
+        }
+
+        function calculateAge() {
+            let birthdate = new Date(document.getElementById('birthdate').value);
+            let today = new Date();
+            let age = today.getFullYear() - birthdate.getFullYear();
+            let monthDiff = today.getMonth() - birthdate.getMonth();
+
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
+                age--;
+            }
+
+            document.getElementById('ageResult').innerText = "Yaşınız: " + age;
+        }
+
+        function calculatePercentage() {
+            let percentage = parseFloat(document.getElementById('percentage').value);
+            let totalValue = parseFloat(document.getElementById('totalValue').value);
+            let result = (percentage / 100) * totalValue;
+
+            document.getElementById('percentageResult').innerText = "Sonuç: " + result;
+        }
+    </script>
+
+</body>
+</html>
